@@ -1,0 +1,14 @@
+[2026-11-17 19:34:24] [ERROR] [StudentDAO.enrollStudentInGrade] Error enrolling student ID: 9999
+Exception: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`erp_little_horizons`.`matriculas`, CONSTRAINT `matriculas_ibfk_1` FOREIGN KEY (`id_estudiante`) REFERENCES `estudiantes` (`id_estudiante`) ON DELETE CASCADE)
+    at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:109)
+    at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:113)
+    at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:938)
+    at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdateInternal(ClientPreparedStatement.java:1106)
+    at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdateInternal(ClientPreparedStatement.java:1045)
+    at com.mysql.cj.jdbc.ClientPreparedStatement.executeLargeUpdate(ClientPreparedStatement.java:1369)
+    at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdate(ClientPreparedStatement.java:1030)
+    at com.littlehorizons.erp.dao.StudentDAO.enrollStudentInGrade(StudentDAO.java:97)
+    at com.littlehorizons.erp.controller.MainController.handleStudentModule(MainController.java:93)
+    at com.littlehorizons.erp.controller.MainController.start(MainController.java:37)
+    at com.littlehorizons.erp.Main.main(Main.java:11)
+--------------------------------------------------------------------------------
