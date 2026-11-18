@@ -26,7 +26,7 @@
 
 ## 3. Authors
 - **Full Name:** Yojhan Vega
-- **Email:** yoesmice@gmail.com
+- **Email:** [yoesmice@gmail.com](mailto:yoesmice@gmail.com)
 - **GitHub:** [https://github.com](https://github.com)
 
 ---
@@ -135,7 +135,7 @@ little-horizons-erp/
 ## 9. Design Principles and Patterns Applied
 
 ### 9.1. SOLID Principles
-- **Single Responsibility Principle (SRP):** Every class has one clear reason to change. For example, `CufeGenerator` exclusively computes SHA-384 hashes, `ErrorLogger` exclusively writes exception logs to `error_log.txt`, and `MainMenuView` handles console formatting.
+- **Single Responsibility Principle (SRP):** Every class has one clear reason to change. `CufeGenerator` exclusively computes SHA-384 hashes, `ErrorLogger` exclusively writes exception logs to `error_log.txt`, and `MainMenuView` handles console formatting.
 - **Open/Closed Principle (OCP):** Service classes (`AcademicService`, `FinanceService`, `ResourceService`) encapsulate business rules and Stream aggregations so new reports or validations can be added without modifying existing DAO SQL queries.
 - **Liskov Substitution Principle (LSP):** All domain entities in `model/` adhere strictly to standard JavaBean contracts, allowing uniform processing across `List` and `Stream` pipelines.
 - **Interface Segregation Principle (ISP):** Utility classes (`InputValidator`, `CufeGenerator`, `ErrorLogger`) expose small, purpose-built static methods rather than monolithic helper interfaces.
@@ -150,12 +150,12 @@ little-horizons-erp/
 
 ## 10. Main Functionalities
 1. **Student Management & Enrollment (`Option 1`):**
-    - Register new students with full personal and medical metadata.
-    - List all active students alphabetically with formatted full names.
-    - Enroll students in academic grades (`Preescolar` to `11°`) per academic year.
+   - Register new students with full personal and medical metadata.
+   - List all active students alphabetically with formatted full names.
+   - Enroll students in academic grades (`Preescolar` to `11°`) per academic year.
 2. **Academic Management (`Option 2`):**
-    - Register and update grades on the Colombian `0.0` to `5.0` scale.
-    - View student grade history and calculate period averages using **Java Stream API**.
-    - Record daily attendance (`Presente`, `Ausente`, `Tardanza`, `Excusa Médica`).
+   - Register and update grades on the Colombian `0.0` to `5.0` scale.
+   - View student grade history and calculate period averages using **Java Stream API**.
+   - Record daily attendance (`Presente`, `Ausente`, `Tardanza`, `Excusa Médica`).
 3. **Extracurricular Activities (`Option 3`):**
-    - Browse active clubs and enroll students while enforcing maximum club capacity.
+   - Browse active clubs and enroll students while enforcing maximum club capacity.
