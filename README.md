@@ -159,3 +159,18 @@ little-horizons-erp/
    - Record daily attendance (`Presente`, `Ausente`, `Tardanza`, `Excusa Médica`).
 3. **Extracurricular Activities (`Option 3`):**
    - Browse active clubs and enroll students while enforcing maximum club capacity.
+
+## Examen #1: importación de asistencias y reporte de clubes
+
+### Importación masiva de asistencias (opción 8 del menú)
+- Lee el archivo `asistencias_importar.csv`, ubicado en la raíz del proyecto, junto al `pom.xml`.
+- La cabecera debe ser exactamente `id_estudiante;id_materia;fecha;estado`.
+- Cada línea se valida de forma independiente: 4 campos, estudiante y materia existentes, fecha real en formato `YYYY-MM-DD` y estado válido (`Presente`, `Ausente`, `Tardanza` o `Excusa Médica`).
+- Las líneas vacías no se cuentan. Al terminar se muestra el total de líneas, las procesadas y las que tuvieron errores.
+- Si se importa dos veces el mismo archivo, los registros repetidos no se insertan y cuentan como líneas con error.
+
+### Reporte de ocupación de clubes extracurriculares (opción 6 del menú)
+Genera el archivo `reporte_ocupacion_clubes.txt` en la raíz del proyecto, ordenado de mayor a menor porcentaje de ocupación, con cupos disponibles, clubes llenos o en sobrecupo y métricas globales. Usa Java Stream API sobre los datos de `clubes` y `membresias_club` (membresías activas).
+
+**¿Por qué elegí este reporte?**
+Permite a la Coordinación Académica ver en un solo documento qué clubes están llenos o en sobrecupo y cuáles tienen cupos sin usar. Con esa información puede reasignar estudiantes o abrir nuevos grupos antes de superar la capacidad segura, asignar tutores y espacios según la demanda real, y decidir qué actividades reforzar, promocionar o replantear con datos y no con percepciones. Además complementa los reportes ejecutivos que ya existían (financiero, asistencia y préstamos) con una mirada a la vida extracurricular.
