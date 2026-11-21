@@ -4,6 +4,8 @@ import com.littlehorizons.erp.model.Invoice;
 import com.littlehorizons.erp.model.Payment;
 import com.littlehorizons.erp.util.InputValidator;
 
+import java.util.Scanner;
+
 public class MainMenuView {
 
     public int showMainMenu() {
@@ -18,7 +20,36 @@ public class MainMenuView {
         System.out.println("5. Resource Management (Library & Labs)");
         System.out.println("6. Executive Reports & Statistics (Streams)");
         System.out.println("7. Exit");
-        return InputValidator.readIntInRange("\nSelect an option (1-7): ", 1, 7);
+        System.out.println("8. TEST - Importar Asistencias desde CSV");
+        return InputValidator.readIntInRange("\nSelect an option (1-8): ", 1, 8);
+    }
+
+    public void showAttendanceImportFileNotFound() {
+        System.out.println("Error: El archivo 'asistencias_importar.csv' no se encuentra en la carpeta raíz del proyecto.");
+    }
+
+    public void showAttendanceImportInvalidHeader() {
+        System.out.println("Error: El archivo no tiene el formato correcto. La cabecera debe ser: id_estudiante;id_materia;fecha;estado");
+    }
+
+    public void showAttendanceImportReadError() {
+        System.out.println("Error: No se pudo leer el archivo 'asistencias_importar.csv'. Revise el archivo error_log.txt.");
+    }
+
+    public void showAttendanceImportReport(int total, int success, int failed) {
+        System.out.println();
+        System.out.println("╔══════════════════════════════════════════════════════════════════╗");
+        System.out.println("║           REPORTE DE IMPORTACIÓN DE ASISTENCIAS                  ║");
+        System.out.println("╚══════════════════════════════════════════════════════════════════╝");
+        System.out.println();
+        System.out.println("Total de líneas en el archivo: " + total);
+        System.out.println("Líneas procesadas exitosamente: " + success);
+        System.out.println("Líneas con errores (no procesadas): " + failed);
+        System.out.println();
+        System.out.println("═══════════════════════════════════════════════════════════════════");
+        System.out.println("Presione Enter para volver al menú principal...");
+        System.out.println("═══════════════════════════════════════════════════════════════════");
+        new Scanner(System.in).nextLine();
     }
 
     public void printDianElectronicInvoice(Invoice invoice, Payment payment, String guardianDocument) {

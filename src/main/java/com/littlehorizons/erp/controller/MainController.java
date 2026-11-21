@@ -7,6 +7,8 @@ import com.littlehorizons.erp.util.InputValidator;
 import com.littlehorizons.erp.view.MainMenuView;
 
 import java.math.BigDecimal;
+import java.nio.file.Path;
+import java.util.Optional;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
@@ -43,6 +45,15 @@ public class MainController {
                 case 7 -> {
                     System.out.println("\nShutting down Little Horizons ERP. Goodbye!");
                     running = false;
+                }
+                case 8 -> {
+                    var r = new AttendanceImportService().importAttendances();
+                    switch (r.status()) {
+                        case FILE_NOT_FOUND -> mainView.showAttendanceImportFileNotFound();
+                        case INVALID_HEADER -> mainView.showAttendanceImportInvalidHeader();
+                        case READ_ERROR -> mainView.showAttendanceImportReadError();
+                        case COMPLETED -> mainView.showAttendanceImportReport(r.total(), r.success(), r.failed());
+                    }
                 }
             }
         }
@@ -290,6 +301,7 @@ public class MainController {
                 System.out.printf("   -> Loan ID: %d | Type: %s | Borrower ID: %d | Due Date: %s%n",
                         loan.getLoanId(), loan.getBorrowerType(), loan.getBorrowerId(), loan.getExpectedReturnDate()));
 
+        new ClubReportService().generateReport().ifPresentOrElse(f -> System.out.println("4. TXT generado: " + f.toAbsolutePath()), () -> System.out.println("4. Error TXT"));
         InputValidator.pressEnterToContinue();
     }
 }
