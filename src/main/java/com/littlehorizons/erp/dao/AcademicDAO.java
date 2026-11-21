@@ -6,6 +6,7 @@ import com.littlehorizons.erp.util.DatabaseConnection;
 import com.littlehorizons.erp.util.ErrorLogger;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,9 +14,9 @@ public class AcademicDAO {
 
     public boolean saveGrade(AcademicRecord record) {
         String sql = "INSERT INTO registros_academicos (id_estudiante, id_materia, id_profesor, año_academico, " +
-                     "periodo_academico, valor_nota, observaciones, fecha_registro) " +
-                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?) " +
-                     "ON DUPLICATE KEY UPDATE valor_nota = VALUES(valor_nota), observaciones = VALUES(observaciones)";
+                "periodo_academico, valor_nota, observaciones, fecha_registro) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?) " +
+                "ON DUPLICATE KEY UPDATE valor_nota = VALUES(valor_nota), observaciones = VALUES(observaciones)";
 
         try (Connection conn = DatabaseConnection.getInstance().getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -66,8 +67,8 @@ public class AcademicDAO {
 
     public boolean saveAttendance(Attendance attendance) {
         String sql = "INSERT INTO asistencias (id_estudiante, id_materia, fecha_asistencia, estado_asistencia, observaciones, registrado_por) " +
-                     "VALUES (?, ?, ?, ?, ?, ?) " +
-                     "ON DUPLICATE KEY UPDATE estado_asistencia = VALUES(estado_asistencia), observaciones = VALUES(observaciones)";
+                "VALUES (?, ?, ?, ?, ?, ?) " +
+                "ON DUPLICATE KEY UPDATE estado_asistencia = VALUES(estado_asistencia), observaciones = VALUES(observaciones)";
 
         try (Connection conn = DatabaseConnection.getInstance().getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -110,5 +111,42 @@ public class AcademicDAO {
             ErrorLogger.logError("AcademicDAO.getRecentAttendances", "Error querying recent attendances", e);
         }
         return list;
+    }
+
+    public boolean existsStudent(int studentId) throws SQLException {
+        String sql = "SELECT 1 FROM estudiantes WHERE id_estudiante = ?";
+        Connection conn = DatabaseConnection.getInstance().getConnection();
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, studentId);
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next();
+            }
+        }
+    }
+
+    public boolean existsSubject(int subjectId) throws SQLException {
+        String sql = "SELECT 1 FROM materias WHERE id_materia = ?";
+        Connection conn = DatabaseConnection.getInstance().getConnection();
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, subjectId);
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next();
+            }
+        }
+    }
+
+    public boolean insertAttendance(int studentId, int subjectId, LocalDate date, String state)
+            throws SQLException {
+        String sql = "INSERT INTO asistencias "
+                + "(id_estudiante, id_materia, fecha_asistencia, estado_asistencia, observaciones, registrado_por) "
+                + "VALUES (?, ?, ?, ?, NULL, NULL)";
+        Connection conn = DatabaseConnection.getInstance().getConnection();
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, studentId);
+            ps.setInt(2, subjectId);
+            ps.setDate(3, Date.valueOf(date));
+            ps.setString(4, state);
+            return ps.executeUpdate() == 1;
+        }
     }
 }
